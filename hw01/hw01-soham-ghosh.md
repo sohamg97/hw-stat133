@@ -1727,7 +1727,9 @@ corrplot(plot_qdat, method = "ellipse")
 corrplot(plot_qdat, type = "upper", order = "hclust" )
 ```
 
-![](hw01-soham-ghosh_files/figure-markdown_github/unnamed-chunk-5-2.png) The first correlation plot has ellipses within in of different sizes. The ellipses become significantly thinner when it is in the box of two of the same categories. For example, if it is in the box for length both on its top and to the left. Additionally, the data is normalized, and the positive correlation is in blue, with negative correlations being shown in red. <enter> The second correlation plot has circles within it, which also is of different sizes and colors. Blue indicate a larger circle, and red circles are smaller. Any circle in a box with both categories as the same on the top and left are large blue circles. A bigger circle seems to indicate a higher value of r in absolute value. A large red circle indicates a high negative correlation. <enter> \#\#\#Pricipal Components Analysis
+![](hw01-soham-ghosh_files/figure-markdown_github/unnamed-chunk-5-2.png) The first correlation plot has ellipses within in of different sizes. The ellipses become significantly thinner when it is in the box of two of the same categories. For example, if it is in the box for length both on its top and to the left. Additionally, the data is normalized, and the positive correlation is in blue, with negative correlations being shown in red. <enter> The second correlation plot has circles within it, which also is of different sizes and colors. Blue indicate a larger circle, and red circles are smaller. Any circle in a box with both categories as the same on the top and left are large blue circles. A bigger circle seems to indicate a higher value of r in absolute value. A large red circle indicates a high negative correlation. <enter>
+
+### Pricipal Components Analysis
 
 ``` r
 principal <- prcomp(scale = TRUE, qdat)
@@ -1765,55 +1767,19 @@ plot(scatter_vehicles[, "PC1"], scatter_vehicles[, "PC2"])
 ![](hw01-soham-ghosh_files/figure-markdown_github/unnamed-chunk-6-1.png)
 
 ``` r
-principal <- princomp(qdat, cor = TRUE)
-principal_load <- principal$loadings
-principal_load
+x <- principal$rotation[1:14]
+y <- principal$rotation[15:28]
+plot(x, y, type = 'n')
+text(x,y, names(qdat), cex = 1.0, col = 'green')
+arrows(0, 0, x, y, col = 'blue')
 ```
 
-    ## 
-    ## Loadings:
-    ##                   Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7 Comp.8
-    ## wheel_base        -0.288 -0.292  0.130  0.240               -0.293  0.295
-    ## length            -0.328 -0.163  0.127  0.147               -0.228       
-    ## width             -0.324 -0.126                0.129  0.124 -0.459  0.197
-    ## height            -0.111 -0.400  0.476  0.392                0.605       
-    ## curb_weight       -0.352                                           -0.136
-    ## engine_size       -0.322        -0.250 -0.182         0.175  0.269  0.241
-    ## bore              -0.259         0.166 -0.394 -0.317 -0.764         0.223
-    ## stroke                   -0.115 -0.704  0.479 -0.433 -0.194  0.136       
-    ## compression_ratio        -0.520 -0.284 -0.168  0.499 -0.316        -0.476
-    ## horsepower        -0.298  0.302 -0.141         0.131         0.240       
-    ## peak_rpm                  0.446         0.527  0.490 -0.441 -0.122  0.124
-    ## city_mpg           0.309 -0.272 -0.114         0.155                0.459
-    ## highway_mpg        0.319 -0.222 -0.115         0.141                0.470
-    ## price             -0.319        -0.135 -0.107  0.366  0.110  0.335  0.266
-    ##                   Comp.9 Comp.10 Comp.11 Comp.12 Comp.13 Comp.14
-    ## wheel_base        -0.318  0.404   0.352   0.409  -0.102         
-    ## length            -0.448 -0.277  -0.647  -0.170  -0.153  -0.164 
-    ## width              0.660 -0.362                                 
-    ## height             0.179 -0.164                                 
-    ## curb_weight       -0.183          0.161  -0.219   0.850   0.109 
-    ## engine_size       -0.212          0.320  -0.569  -0.383         
-    ## bore                                                            
-    ## stroke                                                          
-    ## compression_ratio                                -0.170         
-    ## horsepower        -0.180 -0.544   0.184   0.579                 
-    ## peak_rpm                                 -0.177                 
-    ## city_mpg          -0.100 -0.139   0.142           0.186  -0.698 
-    ## highway_mpg       -0.128 -0.279  -0.165                   0.665 
-    ## price              0.268  0.436  -0.459   0.209   0.117         
-    ## 
-    ##                Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7 Comp.8
-    ## SS loadings     1.000  1.000  1.000  1.000  1.000  1.000  1.000  1.000
-    ## Proportion Var  0.071  0.071  0.071  0.071  0.071  0.071  0.071  0.071
-    ## Cumulative Var  0.071  0.143  0.214  0.286  0.357  0.429  0.500  0.571
-    ##                Comp.9 Comp.10 Comp.11 Comp.12 Comp.13 Comp.14
-    ## SS loadings     1.000   1.000   1.000   1.000   1.000   1.000
-    ## Proportion Var  0.071   0.071   0.071   0.071   0.071   0.071
-    ## Cumulative Var  0.643   0.714   0.786   0.857   0.929   1.000
+![](hw01-soham-ghosh_files/figure-markdown_github/unnamed-chunk-6-2.png)
 
 ``` r
-plot(principal_load[, "Comp.1"], principal_load[, "Comp.2"])
+biplot(principal)
 ```
 
-![](hw01-soham-ghosh_files/figure-markdown_github/unnamed-chunk-6-2.png) The dot plot shows that there is a higher frequency of cars that have a negative smyboling value, indicating that most of the cars are considered safer rather than riskier.
+![](hw01-soham-ghosh_files/figure-markdown_github/unnamed-chunk-6-3.png)
+
+The plot has different lengths of the lines/arrows, which indicate different levels of correlation coefficient between the principal components and the variables.

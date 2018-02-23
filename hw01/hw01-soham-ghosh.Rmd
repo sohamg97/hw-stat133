@@ -126,9 +126,14 @@ eigenvalues
 summary(principal)
 scatter_vehicles <- principal$x
 plot(scatter_vehicles[, "PC1"], scatter_vehicles[, "PC2"])
-principal <- princomp(qdat, cor = TRUE)
-principal_load <- principal$loadings
-principal_load
-plot(principal_load[, "Comp.1"], principal_load[, "Comp.2"])
+
+x <- principal$rotation[1:14]
+y <- principal$rotation[15:28]
+plot(x, y, type = 'n')
+text(x,y, names(qdat), cex = 1.0, col = 'green')
+arrows(0, 0, x, y, col = 'blue')
+
+biplot(principal)
 ```
-The dot plot shows that there is a higher frequency of cars that have a negative smyboling value, indicating that most of the cars are considered safer rather than riskier. 
+
+The plot has different lengths of the lines/arrows, which indicate different levels of correlation coefficient between the principal components and the variables. 
