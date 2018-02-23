@@ -1,4 +1,5 @@
 The data is about cars, and its rating based on insurance and risk purposes and normalized losses compared to other cars. The data also analyzes risks of the car compared to costs. The data was collected by Jeffrey C Schlimmer. It was collected in 1985.
+<enter> 
 -The following are the variables.
 -The symboling data type is numeric, and there are no units. It is a risk factor, adjusted with the prices.
 -The normalized-losses data type is integers, without units. The variable is a value that is normalized for all cars within a particular size classification.

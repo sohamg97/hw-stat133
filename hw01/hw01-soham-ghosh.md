@@ -4,11 +4,8 @@ hw01-Soham-Ghosh
 HW 01
 -----
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
 ``` r
+library(readr)
 titles <- c("symboling", "normalized_losses", "make", "fuel_type", "aspiration", "num_of_doors", "body_style", "drive_wheels","engine_location","wheel_base","length","width","height","curb_weight","enginge_type", "num_of_cylinders","engine_size","fuel_system", "bore", "stroke","compression_ratio","horsepower","peak_rpm","city_mpg","highway_mpg","price")
 types = c("double","double","character","character","character","character","character","character","character", "double","double","double","double","integer","character","character","integer","character","double","double","double","integer","integer","integer","integer","integer")
 data <- read.csv(file = "imports-85.data", col.names = titles, colClasses = types, header = FALSE, na = "?")
@@ -1079,628 +1076,46 @@ str(data)
     ##  $ price            : int  13495 16500 16500 13950 17450 15250 17710 18920 23875 NA ...
 
 ``` r
-data2 <- read.csv(file = "imports-85.data", header = FALSE, na = "?")
-data2
+type_abbre <- "ddcccccccddddiccicdddiiiii"
+data_alternate <- read_csv(file = "imports-85.data", col_types = type_abbre, na = "?", col_names = types)
 ```
 
-    ##     V1  V2            V3     V4    V5   V6          V7  V8    V9   V10
-    ## 1    3  NA   alfa-romero    gas   std  two convertible rwd front  88.6
-    ## 2    3  NA   alfa-romero    gas   std  two convertible rwd front  88.6
-    ## 3    1  NA   alfa-romero    gas   std  two   hatchback rwd front  94.5
-    ## 4    2 164          audi    gas   std four       sedan fwd front  99.8
-    ## 5    2 164          audi    gas   std four       sedan 4wd front  99.4
-    ## 6    2  NA          audi    gas   std  two       sedan fwd front  99.8
-    ## 7    1 158          audi    gas   std four       sedan fwd front 105.8
-    ## 8    1  NA          audi    gas   std four       wagon fwd front 105.8
-    ## 9    1 158          audi    gas turbo four       sedan fwd front 105.8
-    ## 10   0  NA          audi    gas turbo  two   hatchback 4wd front  99.5
-    ## 11   2 192           bmw    gas   std  two       sedan rwd front 101.2
-    ## 12   0 192           bmw    gas   std four       sedan rwd front 101.2
-    ## 13   0 188           bmw    gas   std  two       sedan rwd front 101.2
-    ## 14   0 188           bmw    gas   std four       sedan rwd front 101.2
-    ## 15   1  NA           bmw    gas   std four       sedan rwd front 103.5
-    ## 16   0  NA           bmw    gas   std four       sedan rwd front 103.5
-    ## 17   0  NA           bmw    gas   std  two       sedan rwd front 103.5
-    ## 18   0  NA           bmw    gas   std four       sedan rwd front 110.0
-    ## 19   2 121     chevrolet    gas   std  two   hatchback fwd front  88.4
-    ## 20   1  98     chevrolet    gas   std  two   hatchback fwd front  94.5
-    ## 21   0  81     chevrolet    gas   std four       sedan fwd front  94.5
-    ## 22   1 118         dodge    gas   std  two   hatchback fwd front  93.7
-    ## 23   1 118         dodge    gas   std  two   hatchback fwd front  93.7
-    ## 24   1 118         dodge    gas turbo  two   hatchback fwd front  93.7
-    ## 25   1 148         dodge    gas   std four   hatchback fwd front  93.7
-    ## 26   1 148         dodge    gas   std four       sedan fwd front  93.7
-    ## 27   1 148         dodge    gas   std four       sedan fwd front  93.7
-    ## 28   1 148         dodge    gas turbo <NA>       sedan fwd front  93.7
-    ## 29  -1 110         dodge    gas   std four       wagon fwd front 103.3
-    ## 30   3 145         dodge    gas turbo  two   hatchback fwd front  95.9
-    ## 31   2 137         honda    gas   std  two   hatchback fwd front  86.6
-    ## 32   2 137         honda    gas   std  two   hatchback fwd front  86.6
-    ## 33   1 101         honda    gas   std  two   hatchback fwd front  93.7
-    ## 34   1 101         honda    gas   std  two   hatchback fwd front  93.7
-    ## 35   1 101         honda    gas   std  two   hatchback fwd front  93.7
-    ## 36   0 110         honda    gas   std four       sedan fwd front  96.5
-    ## 37   0  78         honda    gas   std four       wagon fwd front  96.5
-    ## 38   0 106         honda    gas   std  two   hatchback fwd front  96.5
-    ## 39   0 106         honda    gas   std  two   hatchback fwd front  96.5
-    ## 40   0  85         honda    gas   std four       sedan fwd front  96.5
-    ## 41   0  85         honda    gas   std four       sedan fwd front  96.5
-    ## 42   0  85         honda    gas   std four       sedan fwd front  96.5
-    ## 43   1 107         honda    gas   std  two       sedan fwd front  96.5
-    ## 44   0  NA         isuzu    gas   std four       sedan rwd front  94.3
-    ## 45   1  NA         isuzu    gas   std  two       sedan fwd front  94.5
-    ## 46   0  NA         isuzu    gas   std four       sedan fwd front  94.5
-    ## 47   2  NA         isuzu    gas   std  two   hatchback rwd front  96.0
-    ## 48   0 145        jaguar    gas   std four       sedan rwd front 113.0
-    ## 49   0  NA        jaguar    gas   std four       sedan rwd front 113.0
-    ## 50   0  NA        jaguar    gas   std  two       sedan rwd front 102.0
-    ## 51   1 104         mazda    gas   std  two   hatchback fwd front  93.1
-    ## 52   1 104         mazda    gas   std  two   hatchback fwd front  93.1
-    ## 53   1 104         mazda    gas   std  two   hatchback fwd front  93.1
-    ## 54   1 113         mazda    gas   std four       sedan fwd front  93.1
-    ## 55   1 113         mazda    gas   std four       sedan fwd front  93.1
-    ## 56   3 150         mazda    gas   std  two   hatchback rwd front  95.3
-    ## 57   3 150         mazda    gas   std  two   hatchback rwd front  95.3
-    ## 58   3 150         mazda    gas   std  two   hatchback rwd front  95.3
-    ## 59   3 150         mazda    gas   std  two   hatchback rwd front  95.3
-    ## 60   1 129         mazda    gas   std  two   hatchback fwd front  98.8
-    ## 61   0 115         mazda    gas   std four       sedan fwd front  98.8
-    ## 62   1 129         mazda    gas   std  two   hatchback fwd front  98.8
-    ## 63   0 115         mazda    gas   std four       sedan fwd front  98.8
-    ## 64   0  NA         mazda diesel   std <NA>       sedan fwd front  98.8
-    ## 65   0 115         mazda    gas   std four   hatchback fwd front  98.8
-    ## 66   0 118         mazda    gas   std four       sedan rwd front 104.9
-    ## 67   0  NA         mazda diesel   std four       sedan rwd front 104.9
-    ## 68  -1  93 mercedes-benz diesel turbo four       sedan rwd front 110.0
-    ## 69  -1  93 mercedes-benz diesel turbo four       wagon rwd front 110.0
-    ## 70   0  93 mercedes-benz diesel turbo  two     hardtop rwd front 106.7
-    ## 71  -1  93 mercedes-benz diesel turbo four       sedan rwd front 115.6
-    ## 72  -1  NA mercedes-benz    gas   std four       sedan rwd front 115.6
-    ## 73   3 142 mercedes-benz    gas   std  two convertible rwd front  96.6
-    ## 74   0  NA mercedes-benz    gas   std four       sedan rwd front 120.9
-    ## 75   1  NA mercedes-benz    gas   std  two     hardtop rwd front 112.0
-    ## 76   1  NA       mercury    gas turbo  two   hatchback rwd front 102.7
-    ## 77   2 161    mitsubishi    gas   std  two   hatchback fwd front  93.7
-    ## 78   2 161    mitsubishi    gas   std  two   hatchback fwd front  93.7
-    ## 79   2 161    mitsubishi    gas   std  two   hatchback fwd front  93.7
-    ## 80   1 161    mitsubishi    gas turbo  two   hatchback fwd front  93.0
-    ## 81   3 153    mitsubishi    gas turbo  two   hatchback fwd front  96.3
-    ## 82   3 153    mitsubishi    gas   std  two   hatchback fwd front  96.3
-    ## 83   3  NA    mitsubishi    gas turbo  two   hatchback fwd front  95.9
-    ## 84   3  NA    mitsubishi    gas turbo  two   hatchback fwd front  95.9
-    ## 85   3  NA    mitsubishi    gas turbo  two   hatchback fwd front  95.9
-    ## 86   1 125    mitsubishi    gas   std four       sedan fwd front  96.3
-    ## 87   1 125    mitsubishi    gas   std four       sedan fwd front  96.3
-    ## 88   1 125    mitsubishi    gas turbo four       sedan fwd front  96.3
-    ## 89  -1 137    mitsubishi    gas   std four       sedan fwd front  96.3
-    ## 90   1 128        nissan    gas   std  two       sedan fwd front  94.5
-    ## 91   1 128        nissan diesel   std  two       sedan fwd front  94.5
-    ## 92   1 128        nissan    gas   std  two       sedan fwd front  94.5
-    ## 93   1 122        nissan    gas   std four       sedan fwd front  94.5
-    ## 94   1 103        nissan    gas   std four       wagon fwd front  94.5
-    ## 95   1 128        nissan    gas   std  two       sedan fwd front  94.5
-    ## 96   1 128        nissan    gas   std  two   hatchback fwd front  94.5
-    ## 97   1 122        nissan    gas   std four       sedan fwd front  94.5
-    ## 98   1 103        nissan    gas   std four       wagon fwd front  94.5
-    ## 99   2 168        nissan    gas   std  two     hardtop fwd front  95.1
-    ## 100  0 106        nissan    gas   std four   hatchback fwd front  97.2
-    ## 101  0 106        nissan    gas   std four       sedan fwd front  97.2
-    ## 102  0 128        nissan    gas   std four       sedan fwd front 100.4
-    ## 103  0 108        nissan    gas   std four       wagon fwd front 100.4
-    ## 104  0 108        nissan    gas   std four       sedan fwd front 100.4
-    ## 105  3 194        nissan    gas   std  two   hatchback rwd front  91.3
-    ## 106  3 194        nissan    gas turbo  two   hatchback rwd front  91.3
-    ## 107  1 231        nissan    gas   std  two   hatchback rwd front  99.2
-    ## 108  0 161        peugot    gas   std four       sedan rwd front 107.9
-    ## 109  0 161        peugot diesel turbo four       sedan rwd front 107.9
-    ## 110  0  NA        peugot    gas   std four       wagon rwd front 114.2
-    ## 111  0  NA        peugot diesel turbo four       wagon rwd front 114.2
-    ## 112  0 161        peugot    gas   std four       sedan rwd front 107.9
-    ## 113  0 161        peugot diesel turbo four       sedan rwd front 107.9
-    ## 114  0  NA        peugot    gas   std four       wagon rwd front 114.2
-    ## 115  0  NA        peugot diesel turbo four       wagon rwd front 114.2
-    ## 116  0 161        peugot    gas   std four       sedan rwd front 107.9
-    ## 117  0 161        peugot diesel turbo four       sedan rwd front 107.9
-    ## 118  0 161        peugot    gas turbo four       sedan rwd front 108.0
-    ## 119  1 119      plymouth    gas   std  two   hatchback fwd front  93.7
-    ## 120  1 119      plymouth    gas turbo  two   hatchback fwd front  93.7
-    ## 121  1 154      plymouth    gas   std four   hatchback fwd front  93.7
-    ## 122  1 154      plymouth    gas   std four       sedan fwd front  93.7
-    ## 123  1 154      plymouth    gas   std four       sedan fwd front  93.7
-    ## 124 -1  74      plymouth    gas   std four       wagon fwd front 103.3
-    ## 125  3  NA      plymouth    gas turbo  two   hatchback rwd front  95.9
-    ## 126  3 186       porsche    gas   std  two   hatchback rwd front  94.5
-    ## 127  3  NA       porsche    gas   std  two     hardtop rwd  rear  89.5
-    ## 128  3  NA       porsche    gas   std  two     hardtop rwd  rear  89.5
-    ## 129  3  NA       porsche    gas   std  two convertible rwd  rear  89.5
-    ## 130  1  NA       porsche    gas   std  two   hatchback rwd front  98.4
-    ## 131  0  NA       renault    gas   std four       wagon fwd front  96.1
-    ## 132  2  NA       renault    gas   std  two   hatchback fwd front  96.1
-    ## 133  3 150          saab    gas   std  two   hatchback fwd front  99.1
-    ## 134  2 104          saab    gas   std four       sedan fwd front  99.1
-    ## 135  3 150          saab    gas   std  two   hatchback fwd front  99.1
-    ## 136  2 104          saab    gas   std four       sedan fwd front  99.1
-    ## 137  3 150          saab    gas turbo  two   hatchback fwd front  99.1
-    ## 138  2 104          saab    gas turbo four       sedan fwd front  99.1
-    ## 139  2  83        subaru    gas   std  two   hatchback fwd front  93.7
-    ## 140  2  83        subaru    gas   std  two   hatchback fwd front  93.7
-    ## 141  2  83        subaru    gas   std  two   hatchback 4wd front  93.3
-    ## 142  0 102        subaru    gas   std four       sedan fwd front  97.2
-    ## 143  0 102        subaru    gas   std four       sedan fwd front  97.2
-    ## 144  0 102        subaru    gas   std four       sedan fwd front  97.2
-    ## 145  0 102        subaru    gas   std four       sedan 4wd front  97.0
-    ## 146  0 102        subaru    gas turbo four       sedan 4wd front  97.0
-    ## 147  0  89        subaru    gas   std four       wagon fwd front  97.0
-    ## 148  0  89        subaru    gas   std four       wagon fwd front  97.0
-    ## 149  0  85        subaru    gas   std four       wagon 4wd front  96.9
-    ## 150  0  85        subaru    gas turbo four       wagon 4wd front  96.9
-    ## 151  1  87        toyota    gas   std  two   hatchback fwd front  95.7
-    ## 152  1  87        toyota    gas   std  two   hatchback fwd front  95.7
-    ## 153  1  74        toyota    gas   std four   hatchback fwd front  95.7
-    ## 154  0  77        toyota    gas   std four       wagon fwd front  95.7
-    ## 155  0  81        toyota    gas   std four       wagon 4wd front  95.7
-    ## 156  0  91        toyota    gas   std four       wagon 4wd front  95.7
-    ## 157  0  91        toyota    gas   std four       sedan fwd front  95.7
-    ## 158  0  91        toyota    gas   std four   hatchback fwd front  95.7
-    ## 159  0  91        toyota diesel   std four       sedan fwd front  95.7
-    ## 160  0  91        toyota diesel   std four   hatchback fwd front  95.7
-    ## 161  0  91        toyota    gas   std four       sedan fwd front  95.7
-    ## 162  0  91        toyota    gas   std four   hatchback fwd front  95.7
-    ## 163  0  91        toyota    gas   std four       sedan fwd front  95.7
-    ## 164  1 168        toyota    gas   std  two       sedan rwd front  94.5
-    ## 165  1 168        toyota    gas   std  two   hatchback rwd front  94.5
-    ## 166  1 168        toyota    gas   std  two       sedan rwd front  94.5
-    ## 167  1 168        toyota    gas   std  two   hatchback rwd front  94.5
-    ## 168  2 134        toyota    gas   std  two     hardtop rwd front  98.4
-    ## 169  2 134        toyota    gas   std  two     hardtop rwd front  98.4
-    ## 170  2 134        toyota    gas   std  two   hatchback rwd front  98.4
-    ## 171  2 134        toyota    gas   std  two     hardtop rwd front  98.4
-    ## 172  2 134        toyota    gas   std  two   hatchback rwd front  98.4
-    ## 173  2 134        toyota    gas   std  two convertible rwd front  98.4
-    ## 174 -1  65        toyota    gas   std four       sedan fwd front 102.4
-    ## 175 -1  65        toyota diesel turbo four       sedan fwd front 102.4
-    ## 176 -1  65        toyota    gas   std four   hatchback fwd front 102.4
-    ## 177 -1  65        toyota    gas   std four       sedan fwd front 102.4
-    ## 178 -1  65        toyota    gas   std four   hatchback fwd front 102.4
-    ## 179  3 197        toyota    gas   std  two   hatchback rwd front 102.9
-    ## 180  3 197        toyota    gas   std  two   hatchback rwd front 102.9
-    ## 181 -1  90        toyota    gas   std four       sedan rwd front 104.5
-    ## 182 -1  NA        toyota    gas   std four       wagon rwd front 104.5
-    ## 183  2 122    volkswagen diesel   std  two       sedan fwd front  97.3
-    ## 184  2 122    volkswagen    gas   std  two       sedan fwd front  97.3
-    ## 185  2  94    volkswagen diesel   std four       sedan fwd front  97.3
-    ## 186  2  94    volkswagen    gas   std four       sedan fwd front  97.3
-    ## 187  2  94    volkswagen    gas   std four       sedan fwd front  97.3
-    ## 188  2  94    volkswagen diesel turbo four       sedan fwd front  97.3
-    ## 189  2  94    volkswagen    gas   std four       sedan fwd front  97.3
-    ## 190  3  NA    volkswagen    gas   std  two convertible fwd front  94.5
-    ## 191  3 256    volkswagen    gas   std  two   hatchback fwd front  94.5
-    ## 192  0  NA    volkswagen    gas   std four       sedan fwd front 100.4
-    ## 193  0  NA    volkswagen diesel turbo four       sedan fwd front 100.4
-    ## 194  0  NA    volkswagen    gas   std four       wagon fwd front 100.4
-    ## 195 -2 103         volvo    gas   std four       sedan rwd front 104.3
-    ## 196 -1  74         volvo    gas   std four       wagon rwd front 104.3
-    ## 197 -2 103         volvo    gas   std four       sedan rwd front 104.3
-    ## 198 -1  74         volvo    gas   std four       wagon rwd front 104.3
-    ## 199 -2 103         volvo    gas turbo four       sedan rwd front 104.3
-    ## 200 -1  74         volvo    gas turbo four       wagon rwd front 104.3
-    ## 201 -1  95         volvo    gas   std four       sedan rwd front 109.1
-    ## 202 -1  95         volvo    gas turbo four       sedan rwd front 109.1
-    ## 203 -1  95         volvo    gas   std four       sedan rwd front 109.1
-    ## 204 -1  95         volvo diesel turbo four       sedan rwd front 109.1
-    ## 205 -1  95         volvo    gas turbo four       sedan rwd front 109.1
-    ##       V11  V12  V13  V14   V15    V16 V17  V18  V19  V20   V21 V22  V23
-    ## 1   168.8 64.1 48.8 2548  dohc   four 130 mpfi 3.47 2.68  9.00 111 5000
-    ## 2   168.8 64.1 48.8 2548  dohc   four 130 mpfi 3.47 2.68  9.00 111 5000
-    ## 3   171.2 65.5 52.4 2823  ohcv    six 152 mpfi 2.68 3.47  9.00 154 5000
-    ## 4   176.6 66.2 54.3 2337   ohc   four 109 mpfi 3.19 3.40 10.00 102 5500
-    ## 5   176.6 66.4 54.3 2824   ohc   five 136 mpfi 3.19 3.40  8.00 115 5500
-    ## 6   177.3 66.3 53.1 2507   ohc   five 136 mpfi 3.19 3.40  8.50 110 5500
-    ## 7   192.7 71.4 55.7 2844   ohc   five 136 mpfi 3.19 3.40  8.50 110 5500
-    ## 8   192.7 71.4 55.7 2954   ohc   five 136 mpfi 3.19 3.40  8.50 110 5500
-    ## 9   192.7 71.4 55.9 3086   ohc   five 131 mpfi 3.13 3.40  8.30 140 5500
-    ## 10  178.2 67.9 52.0 3053   ohc   five 131 mpfi 3.13 3.40  7.00 160 5500
-    ## 11  176.8 64.8 54.3 2395   ohc   four 108 mpfi 3.50 2.80  8.80 101 5800
-    ## 12  176.8 64.8 54.3 2395   ohc   four 108 mpfi 3.50 2.80  8.80 101 5800
-    ## 13  176.8 64.8 54.3 2710   ohc    six 164 mpfi 3.31 3.19  9.00 121 4250
-    ## 14  176.8 64.8 54.3 2765   ohc    six 164 mpfi 3.31 3.19  9.00 121 4250
-    ## 15  189.0 66.9 55.7 3055   ohc    six 164 mpfi 3.31 3.19  9.00 121 4250
-    ## 16  189.0 66.9 55.7 3230   ohc    six 209 mpfi 3.62 3.39  8.00 182 5400
-    ## 17  193.8 67.9 53.7 3380   ohc    six 209 mpfi 3.62 3.39  8.00 182 5400
-    ## 18  197.0 70.9 56.3 3505   ohc    six 209 mpfi 3.62 3.39  8.00 182 5400
-    ## 19  141.1 60.3 53.2 1488     l  three  61 2bbl 2.91 3.03  9.50  48 5100
-    ## 20  155.9 63.6 52.0 1874   ohc   four  90 2bbl 3.03 3.11  9.60  70 5400
-    ## 21  158.8 63.6 52.0 1909   ohc   four  90 2bbl 3.03 3.11  9.60  70 5400
-    ## 22  157.3 63.8 50.8 1876   ohc   four  90 2bbl 2.97 3.23  9.41  68 5500
-    ## 23  157.3 63.8 50.8 1876   ohc   four  90 2bbl 2.97 3.23  9.40  68 5500
-    ## 24  157.3 63.8 50.8 2128   ohc   four  98 mpfi 3.03 3.39  7.60 102 5500
-    ## 25  157.3 63.8 50.6 1967   ohc   four  90 2bbl 2.97 3.23  9.40  68 5500
-    ## 26  157.3 63.8 50.6 1989   ohc   four  90 2bbl 2.97 3.23  9.40  68 5500
-    ## 27  157.3 63.8 50.6 1989   ohc   four  90 2bbl 2.97 3.23  9.40  68 5500
-    ## 28  157.3 63.8 50.6 2191   ohc   four  98 mpfi 3.03 3.39  7.60 102 5500
-    ## 29  174.6 64.6 59.8 2535   ohc   four 122 2bbl 3.34 3.46  8.50  88 5000
-    ## 30  173.2 66.3 50.2 2811   ohc   four 156  mfi 3.60 3.90  7.00 145 5000
-    ## 31  144.6 63.9 50.8 1713   ohc   four  92 1bbl 2.91 3.41  9.60  58 4800
-    ## 32  144.6 63.9 50.8 1819   ohc   four  92 1bbl 2.91 3.41  9.20  76 6000
-    ## 33  150.0 64.0 52.6 1837   ohc   four  79 1bbl 2.91 3.07 10.10  60 5500
-    ## 34  150.0 64.0 52.6 1940   ohc   four  92 1bbl 2.91 3.41  9.20  76 6000
-    ## 35  150.0 64.0 52.6 1956   ohc   four  92 1bbl 2.91 3.41  9.20  76 6000
-    ## 36  163.4 64.0 54.5 2010   ohc   four  92 1bbl 2.91 3.41  9.20  76 6000
-    ## 37  157.1 63.9 58.3 2024   ohc   four  92 1bbl 2.92 3.41  9.20  76 6000
-    ## 38  167.5 65.2 53.3 2236   ohc   four 110 1bbl 3.15 3.58  9.00  86 5800
-    ## 39  167.5 65.2 53.3 2289   ohc   four 110 1bbl 3.15 3.58  9.00  86 5800
-    ## 40  175.4 65.2 54.1 2304   ohc   four 110 1bbl 3.15 3.58  9.00  86 5800
-    ## 41  175.4 62.5 54.1 2372   ohc   four 110 1bbl 3.15 3.58  9.00  86 5800
-    ## 42  175.4 65.2 54.1 2465   ohc   four 110 mpfi 3.15 3.58  9.00 101 5800
-    ## 43  169.1 66.0 51.0 2293   ohc   four 110 2bbl 3.15 3.58  9.10 100 5500
-    ## 44  170.7 61.8 53.5 2337   ohc   four 111 2bbl 3.31 3.23  8.50  78 4800
-    ## 45  155.9 63.6 52.0 1874   ohc   four  90 2bbl 3.03 3.11  9.60  70 5400
-    ## 46  155.9 63.6 52.0 1909   ohc   four  90 2bbl 3.03 3.11  9.60  70 5400
-    ## 47  172.6 65.2 51.4 2734   ohc   four 119 spfi 3.43 3.23  9.20  90 5000
-    ## 48  199.6 69.6 52.8 4066  dohc    six 258 mpfi 3.63 4.17  8.10 176 4750
-    ## 49  199.6 69.6 52.8 4066  dohc    six 258 mpfi 3.63 4.17  8.10 176 4750
-    ## 50  191.7 70.6 47.8 3950  ohcv twelve 326 mpfi 3.54 2.76 11.50 262 5000
-    ## 51  159.1 64.2 54.1 1890   ohc   four  91 2bbl 3.03 3.15  9.00  68 5000
-    ## 52  159.1 64.2 54.1 1900   ohc   four  91 2bbl 3.03 3.15  9.00  68 5000
-    ## 53  159.1 64.2 54.1 1905   ohc   four  91 2bbl 3.03 3.15  9.00  68 5000
-    ## 54  166.8 64.2 54.1 1945   ohc   four  91 2bbl 3.03 3.15  9.00  68 5000
-    ## 55  166.8 64.2 54.1 1950   ohc   four  91 2bbl 3.08 3.15  9.00  68 5000
-    ## 56  169.0 65.7 49.6 2380 rotor    two  70 4bbl   NA   NA  9.40 101 6000
-    ## 57  169.0 65.7 49.6 2380 rotor    two  70 4bbl   NA   NA  9.40 101 6000
-    ## 58  169.0 65.7 49.6 2385 rotor    two  70 4bbl   NA   NA  9.40 101 6000
-    ## 59  169.0 65.7 49.6 2500 rotor    two  80 mpfi   NA   NA  9.40 135 6000
-    ## 60  177.8 66.5 53.7 2385   ohc   four 122 2bbl 3.39 3.39  8.60  84 4800
-    ## 61  177.8 66.5 55.5 2410   ohc   four 122 2bbl 3.39 3.39  8.60  84 4800
-    ## 62  177.8 66.5 53.7 2385   ohc   four 122 2bbl 3.39 3.39  8.60  84 4800
-    ## 63  177.8 66.5 55.5 2410   ohc   four 122 2bbl 3.39 3.39  8.60  84 4800
-    ## 64  177.8 66.5 55.5 2443   ohc   four 122  idi 3.39 3.39 22.70  64 4650
-    ## 65  177.8 66.5 55.5 2425   ohc   four 122 2bbl 3.39 3.39  8.60  84 4800
-    ## 66  175.0 66.1 54.4 2670   ohc   four 140 mpfi 3.76 3.16  8.00 120 5000
-    ## 67  175.0 66.1 54.4 2700   ohc   four 134  idi 3.43 3.64 22.00  72 4200
-    ## 68  190.9 70.3 56.5 3515   ohc   five 183  idi 3.58 3.64 21.50 123 4350
-    ## 69  190.9 70.3 58.7 3750   ohc   five 183  idi 3.58 3.64 21.50 123 4350
-    ## 70  187.5 70.3 54.9 3495   ohc   five 183  idi 3.58 3.64 21.50 123 4350
-    ## 71  202.6 71.7 56.3 3770   ohc   five 183  idi 3.58 3.64 21.50 123 4350
-    ## 72  202.6 71.7 56.5 3740  ohcv  eight 234 mpfi 3.46 3.10  8.30 155 4750
-    ## 73  180.3 70.5 50.8 3685  ohcv  eight 234 mpfi 3.46 3.10  8.30 155 4750
-    ## 74  208.1 71.7 56.7 3900  ohcv  eight 308 mpfi 3.80 3.35  8.00 184 4500
-    ## 75  199.2 72.0 55.4 3715  ohcv  eight 304 mpfi 3.80 3.35  8.00 184 4500
-    ## 76  178.4 68.0 54.8 2910   ohc   four 140 mpfi 3.78 3.12  8.00 175 5000
-    ## 77  157.3 64.4 50.8 1918   ohc   four  92 2bbl 2.97 3.23  9.40  68 5500
-    ## 78  157.3 64.4 50.8 1944   ohc   four  92 2bbl 2.97 3.23  9.40  68 5500
-    ## 79  157.3 64.4 50.8 2004   ohc   four  92 2bbl 2.97 3.23  9.40  68 5500
-    ## 80  157.3 63.8 50.8 2145   ohc   four  98 spdi 3.03 3.39  7.60 102 5500
-    ## 81  173.0 65.4 49.4 2370   ohc   four 110 spdi 3.17 3.46  7.50 116 5500
-    ## 82  173.0 65.4 49.4 2328   ohc   four 122 2bbl 3.35 3.46  8.50  88 5000
-    ## 83  173.2 66.3 50.2 2833   ohc   four 156 spdi 3.58 3.86  7.00 145 5000
-    ## 84  173.2 66.3 50.2 2921   ohc   four 156 spdi 3.59 3.86  7.00 145 5000
-    ## 85  173.2 66.3 50.2 2926   ohc   four 156 spdi 3.59 3.86  7.00 145 5000
-    ## 86  172.4 65.4 51.6 2365   ohc   four 122 2bbl 3.35 3.46  8.50  88 5000
-    ## 87  172.4 65.4 51.6 2405   ohc   four 122 2bbl 3.35 3.46  8.50  88 5000
-    ## 88  172.4 65.4 51.6 2403   ohc   four 110 spdi 3.17 3.46  7.50 116 5500
-    ## 89  172.4 65.4 51.6 2403   ohc   four 110 spdi 3.17 3.46  7.50 116 5500
-    ## 90  165.3 63.8 54.5 1889   ohc   four  97 2bbl 3.15 3.29  9.40  69 5200
-    ## 91  165.3 63.8 54.5 2017   ohc   four 103  idi 2.99 3.47 21.90  55 4800
-    ## 92  165.3 63.8 54.5 1918   ohc   four  97 2bbl 3.15 3.29  9.40  69 5200
-    ## 93  165.3 63.8 54.5 1938   ohc   four  97 2bbl 3.15 3.29  9.40  69 5200
-    ## 94  170.2 63.8 53.5 2024   ohc   four  97 2bbl 3.15 3.29  9.40  69 5200
-    ## 95  165.3 63.8 54.5 1951   ohc   four  97 2bbl 3.15 3.29  9.40  69 5200
-    ## 96  165.6 63.8 53.3 2028   ohc   four  97 2bbl 3.15 3.29  9.40  69 5200
-    ## 97  165.3 63.8 54.5 1971   ohc   four  97 2bbl 3.15 3.29  9.40  69 5200
-    ## 98  170.2 63.8 53.5 2037   ohc   four  97 2bbl 3.15 3.29  9.40  69 5200
-    ## 99  162.4 63.8 53.3 2008   ohc   four  97 2bbl 3.15 3.29  9.40  69 5200
-    ## 100 173.4 65.2 54.7 2324   ohc   four 120 2bbl 3.33 3.47  8.50  97 5200
-    ## 101 173.4 65.2 54.7 2302   ohc   four 120 2bbl 3.33 3.47  8.50  97 5200
-    ## 102 181.7 66.5 55.1 3095  ohcv    six 181 mpfi 3.43 3.27  9.00 152 5200
-    ## 103 184.6 66.5 56.1 3296  ohcv    six 181 mpfi 3.43 3.27  9.00 152 5200
-    ## 104 184.6 66.5 55.1 3060  ohcv    six 181 mpfi 3.43 3.27  9.00 152 5200
-    ## 105 170.7 67.9 49.7 3071  ohcv    six 181 mpfi 3.43 3.27  9.00 160 5200
-    ## 106 170.7 67.9 49.7 3139  ohcv    six 181 mpfi 3.43 3.27  7.80 200 5200
-    ## 107 178.5 67.9 49.7 3139  ohcv    six 181 mpfi 3.43 3.27  9.00 160 5200
-    ## 108 186.7 68.4 56.7 3020     l   four 120 mpfi 3.46 3.19  8.40  97 5000
-    ## 109 186.7 68.4 56.7 3197     l   four 152  idi 3.70 3.52 21.00  95 4150
-    ## 110 198.9 68.4 58.7 3230     l   four 120 mpfi 3.46 3.19  8.40  97 5000
-    ## 111 198.9 68.4 58.7 3430     l   four 152  idi 3.70 3.52 21.00  95 4150
-    ## 112 186.7 68.4 56.7 3075     l   four 120 mpfi 3.46 2.19  8.40  95 5000
-    ## 113 186.7 68.4 56.7 3252     l   four 152  idi 3.70 3.52 21.00  95 4150
-    ## 114 198.9 68.4 56.7 3285     l   four 120 mpfi 3.46 2.19  8.40  95 5000
-    ## 115 198.9 68.4 58.7 3485     l   four 152  idi 3.70 3.52 21.00  95 4150
-    ## 116 186.7 68.4 56.7 3075     l   four 120 mpfi 3.46 3.19  8.40  97 5000
-    ## 117 186.7 68.4 56.7 3252     l   four 152  idi 3.70 3.52 21.00  95 4150
-    ## 118 186.7 68.3 56.0 3130     l   four 134 mpfi 3.61 3.21  7.00 142 5600
-    ## 119 157.3 63.8 50.8 1918   ohc   four  90 2bbl 2.97 3.23  9.40  68 5500
-    ## 120 157.3 63.8 50.8 2128   ohc   four  98 spdi 3.03 3.39  7.60 102 5500
-    ## 121 157.3 63.8 50.6 1967   ohc   four  90 2bbl 2.97 3.23  9.40  68 5500
-    ## 122 167.3 63.8 50.8 1989   ohc   four  90 2bbl 2.97 3.23  9.40  68 5500
-    ## 123 167.3 63.8 50.8 2191   ohc   four  98 2bbl 2.97 3.23  9.40  68 5500
-    ## 124 174.6 64.6 59.8 2535   ohc   four 122 2bbl 3.35 3.46  8.50  88 5000
-    ## 125 173.2 66.3 50.2 2818   ohc   four 156 spdi 3.59 3.86  7.00 145 5000
-    ## 126 168.9 68.3 50.2 2778   ohc   four 151 mpfi 3.94 3.11  9.50 143 5500
-    ## 127 168.9 65.0 51.6 2756  ohcf    six 194 mpfi 3.74 2.90  9.50 207 5900
-    ## 128 168.9 65.0 51.6 2756  ohcf    six 194 mpfi 3.74 2.90  9.50 207 5900
-    ## 129 168.9 65.0 51.6 2800  ohcf    six 194 mpfi 3.74 2.90  9.50 207 5900
-    ## 130 175.7 72.3 50.5 3366 dohcv  eight 203 mpfi 3.94 3.11 10.00 288 5750
-    ## 131 181.5 66.5 55.2 2579   ohc   four 132 mpfi 3.46 3.90  8.70  NA   NA
-    ## 132 176.8 66.6 50.5 2460   ohc   four 132 mpfi 3.46 3.90  8.70  NA   NA
-    ## 133 186.6 66.5 56.1 2658   ohc   four 121 mpfi 3.54 3.07  9.31 110 5250
-    ## 134 186.6 66.5 56.1 2695   ohc   four 121 mpfi 3.54 3.07  9.30 110 5250
-    ## 135 186.6 66.5 56.1 2707   ohc   four 121 mpfi 2.54 2.07  9.30 110 5250
-    ## 136 186.6 66.5 56.1 2758   ohc   four 121 mpfi 3.54 3.07  9.30 110 5250
-    ## 137 186.6 66.5 56.1 2808  dohc   four 121 mpfi 3.54 3.07  9.00 160 5500
-    ## 138 186.6 66.5 56.1 2847  dohc   four 121 mpfi 3.54 3.07  9.00 160 5500
-    ## 139 156.9 63.4 53.7 2050  ohcf   four  97 2bbl 3.62 2.36  9.00  69 4900
-    ## 140 157.9 63.6 53.7 2120  ohcf   four 108 2bbl 3.62 2.64  8.70  73 4400
-    ## 141 157.3 63.8 55.7 2240  ohcf   four 108 2bbl 3.62 2.64  8.70  73 4400
-    ## 142 172.0 65.4 52.5 2145  ohcf   four 108 2bbl 3.62 2.64  9.50  82 4800
-    ## 143 172.0 65.4 52.5 2190  ohcf   four 108 2bbl 3.62 2.64  9.50  82 4400
-    ## 144 172.0 65.4 52.5 2340  ohcf   four 108 mpfi 3.62 2.64  9.00  94 5200
-    ## 145 172.0 65.4 54.3 2385  ohcf   four 108 2bbl 3.62 2.64  9.00  82 4800
-    ## 146 172.0 65.4 54.3 2510  ohcf   four 108 mpfi 3.62 2.64  7.70 111 4800
-    ## 147 173.5 65.4 53.0 2290  ohcf   four 108 2bbl 3.62 2.64  9.00  82 4800
-    ## 148 173.5 65.4 53.0 2455  ohcf   four 108 mpfi 3.62 2.64  9.00  94 5200
-    ## 149 173.6 65.4 54.9 2420  ohcf   four 108 2bbl 3.62 2.64  9.00  82 4800
-    ## 150 173.6 65.4 54.9 2650  ohcf   four 108 mpfi 3.62 2.64  7.70 111 4800
-    ## 151 158.7 63.6 54.5 1985   ohc   four  92 2bbl 3.05 3.03  9.00  62 4800
-    ## 152 158.7 63.6 54.5 2040   ohc   four  92 2bbl 3.05 3.03  9.00  62 4800
-    ## 153 158.7 63.6 54.5 2015   ohc   four  92 2bbl 3.05 3.03  9.00  62 4800
-    ## 154 169.7 63.6 59.1 2280   ohc   four  92 2bbl 3.05 3.03  9.00  62 4800
-    ## 155 169.7 63.6 59.1 2290   ohc   four  92 2bbl 3.05 3.03  9.00  62 4800
-    ## 156 169.7 63.6 59.1 3110   ohc   four  92 2bbl 3.05 3.03  9.00  62 4800
-    ## 157 166.3 64.4 53.0 2081   ohc   four  98 2bbl 3.19 3.03  9.00  70 4800
-    ## 158 166.3 64.4 52.8 2109   ohc   four  98 2bbl 3.19 3.03  9.00  70 4800
-    ## 159 166.3 64.4 53.0 2275   ohc   four 110  idi 3.27 3.35 22.50  56 4500
-    ## 160 166.3 64.4 52.8 2275   ohc   four 110  idi 3.27 3.35 22.50  56 4500
-    ## 161 166.3 64.4 53.0 2094   ohc   four  98 2bbl 3.19 3.03  9.00  70 4800
-    ## 162 166.3 64.4 52.8 2122   ohc   four  98 2bbl 3.19 3.03  9.00  70 4800
-    ## 163 166.3 64.4 52.8 2140   ohc   four  98 2bbl 3.19 3.03  9.00  70 4800
-    ## 164 168.7 64.0 52.6 2169   ohc   four  98 2bbl 3.19 3.03  9.00  70 4800
-    ## 165 168.7 64.0 52.6 2204   ohc   four  98 2bbl 3.19 3.03  9.00  70 4800
-    ## 166 168.7 64.0 52.6 2265  dohc   four  98 mpfi 3.24 3.08  9.40 112 6600
-    ## 167 168.7 64.0 52.6 2300  dohc   four  98 mpfi 3.24 3.08  9.40 112 6600
-    ## 168 176.2 65.6 52.0 2540   ohc   four 146 mpfi 3.62 3.50  9.30 116 4800
-    ## 169 176.2 65.6 52.0 2536   ohc   four 146 mpfi 3.62 3.50  9.30 116 4800
-    ## 170 176.2 65.6 52.0 2551   ohc   four 146 mpfi 3.62 3.50  9.30 116 4800
-    ## 171 176.2 65.6 52.0 2679   ohc   four 146 mpfi 3.62 3.50  9.30 116 4800
-    ## 172 176.2 65.6 52.0 2714   ohc   four 146 mpfi 3.62 3.50  9.30 116 4800
-    ## 173 176.2 65.6 53.0 2975   ohc   four 146 mpfi 3.62 3.50  9.30 116 4800
-    ## 174 175.6 66.5 54.9 2326   ohc   four 122 mpfi 3.31 3.54  8.70  92 4200
-    ## 175 175.6 66.5 54.9 2480   ohc   four 110  idi 3.27 3.35 22.50  73 4500
-    ## 176 175.6 66.5 53.9 2414   ohc   four 122 mpfi 3.31 3.54  8.70  92 4200
-    ## 177 175.6 66.5 54.9 2414   ohc   four 122 mpfi 3.31 3.54  8.70  92 4200
-    ## 178 175.6 66.5 53.9 2458   ohc   four 122 mpfi 3.31 3.54  8.70  92 4200
-    ## 179 183.5 67.7 52.0 2976  dohc    six 171 mpfi 3.27 3.35  9.30 161 5200
-    ## 180 183.5 67.7 52.0 3016  dohc    six 171 mpfi 3.27 3.35  9.30 161 5200
-    ## 181 187.8 66.5 54.1 3131  dohc    six 171 mpfi 3.27 3.35  9.20 156 5200
-    ## 182 187.8 66.5 54.1 3151  dohc    six 161 mpfi 3.27 3.35  9.20 156 5200
-    ## 183 171.7 65.5 55.7 2261   ohc   four  97  idi 3.01 3.40 23.00  52 4800
-    ## 184 171.7 65.5 55.7 2209   ohc   four 109 mpfi 3.19 3.40  9.00  85 5250
-    ## 185 171.7 65.5 55.7 2264   ohc   four  97  idi 3.01 3.40 23.00  52 4800
-    ## 186 171.7 65.5 55.7 2212   ohc   four 109 mpfi 3.19 3.40  9.00  85 5250
-    ## 187 171.7 65.5 55.7 2275   ohc   four 109 mpfi 3.19 3.40  9.00  85 5250
-    ## 188 171.7 65.5 55.7 2319   ohc   four  97  idi 3.01 3.40 23.00  68 4500
-    ## 189 171.7 65.5 55.7 2300   ohc   four 109 mpfi 3.19 3.40 10.00 100 5500
-    ## 190 159.3 64.2 55.6 2254   ohc   four 109 mpfi 3.19 3.40  8.50  90 5500
-    ## 191 165.7 64.0 51.4 2221   ohc   four 109 mpfi 3.19 3.40  8.50  90 5500
-    ## 192 180.2 66.9 55.1 2661   ohc   five 136 mpfi 3.19 3.40  8.50 110 5500
-    ## 193 180.2 66.9 55.1 2579   ohc   four  97  idi 3.01 3.40 23.00  68 4500
-    ## 194 183.1 66.9 55.1 2563   ohc   four 109 mpfi 3.19 3.40  9.00  88 5500
-    ## 195 188.8 67.2 56.2 2912   ohc   four 141 mpfi 3.78 3.15  9.50 114 5400
-    ## 196 188.8 67.2 57.5 3034   ohc   four 141 mpfi 3.78 3.15  9.50 114 5400
-    ## 197 188.8 67.2 56.2 2935   ohc   four 141 mpfi 3.78 3.15  9.50 114 5400
-    ## 198 188.8 67.2 57.5 3042   ohc   four 141 mpfi 3.78 3.15  9.50 114 5400
-    ## 199 188.8 67.2 56.2 3045   ohc   four 130 mpfi 3.62 3.15  7.50 162 5100
-    ## 200 188.8 67.2 57.5 3157   ohc   four 130 mpfi 3.62 3.15  7.50 162 5100
-    ## 201 188.8 68.9 55.5 2952   ohc   four 141 mpfi 3.78 3.15  9.50 114 5400
-    ## 202 188.8 68.8 55.5 3049   ohc   four 141 mpfi 3.78 3.15  8.70 160 5300
-    ## 203 188.8 68.9 55.5 3012  ohcv    six 173 mpfi 3.58 2.87  8.80 134 5500
-    ## 204 188.8 68.9 55.5 3217   ohc    six 145  idi 3.01 3.40 23.00 106 4800
-    ## 205 188.8 68.9 55.5 3062   ohc   four 141 mpfi 3.78 3.15  9.50 114 5400
-    ##     V24 V25   V26
-    ## 1    21  27 13495
-    ## 2    21  27 16500
-    ## 3    19  26 16500
-    ## 4    24  30 13950
-    ## 5    18  22 17450
-    ## 6    19  25 15250
-    ## 7    19  25 17710
-    ## 8    19  25 18920
-    ## 9    17  20 23875
-    ## 10   16  22    NA
-    ## 11   23  29 16430
-    ## 12   23  29 16925
-    ## 13   21  28 20970
-    ## 14   21  28 21105
-    ## 15   20  25 24565
-    ## 16   16  22 30760
-    ## 17   16  22 41315
-    ## 18   15  20 36880
-    ## 19   47  53  5151
-    ## 20   38  43  6295
-    ## 21   38  43  6575
-    ## 22   37  41  5572
-    ## 23   31  38  6377
-    ## 24   24  30  7957
-    ## 25   31  38  6229
-    ## 26   31  38  6692
-    ## 27   31  38  7609
-    ## 28   24  30  8558
-    ## 29   24  30  8921
-    ## 30   19  24 12964
-    ## 31   49  54  6479
-    ## 32   31  38  6855
-    ## 33   38  42  5399
-    ## 34   30  34  6529
-    ## 35   30  34  7129
-    ## 36   30  34  7295
-    ## 37   30  34  7295
-    ## 38   27  33  7895
-    ## 39   27  33  9095
-    ## 40   27  33  8845
-    ## 41   27  33 10295
-    ## 42   24  28 12945
-    ## 43   25  31 10345
-    ## 44   24  29  6785
-    ## 45   38  43    NA
-    ## 46   38  43    NA
-    ## 47   24  29 11048
-    ## 48   15  19 32250
-    ## 49   15  19 35550
-    ## 50   13  17 36000
-    ## 51   30  31  5195
-    ## 52   31  38  6095
-    ## 53   31  38  6795
-    ## 54   31  38  6695
-    ## 55   31  38  7395
-    ## 56   17  23 10945
-    ## 57   17  23 11845
-    ## 58   17  23 13645
-    ## 59   16  23 15645
-    ## 60   26  32  8845
-    ## 61   26  32  8495
-    ## 62   26  32 10595
-    ## 63   26  32 10245
-    ## 64   36  42 10795
-    ## 65   26  32 11245
-    ## 66   19  27 18280
-    ## 67   31  39 18344
-    ## 68   22  25 25552
-    ## 69   22  25 28248
-    ## 70   22  25 28176
-    ## 71   22  25 31600
-    ## 72   16  18 34184
-    ## 73   16  18 35056
-    ## 74   14  16 40960
-    ## 75   14  16 45400
-    ## 76   19  24 16503
-    ## 77   37  41  5389
-    ## 78   31  38  6189
-    ## 79   31  38  6669
-    ## 80   24  30  7689
-    ## 81   23  30  9959
-    ## 82   25  32  8499
-    ## 83   19  24 12629
-    ## 84   19  24 14869
-    ## 85   19  24 14489
-    ## 86   25  32  6989
-    ## 87   25  32  8189
-    ## 88   23  30  9279
-    ## 89   23  30  9279
-    ## 90   31  37  5499
-    ## 91   45  50  7099
-    ## 92   31  37  6649
-    ## 93   31  37  6849
-    ## 94   31  37  7349
-    ## 95   31  37  7299
-    ## 96   31  37  7799
-    ## 97   31  37  7499
-    ## 98   31  37  7999
-    ## 99   31  37  8249
-    ## 100  27  34  8949
-    ## 101  27  34  9549
-    ## 102  17  22 13499
-    ## 103  17  22 14399
-    ## 104  19  25 13499
-    ## 105  19  25 17199
-    ## 106  17  23 19699
-    ## 107  19  25 18399
-    ## 108  19  24 11900
-    ## 109  28  33 13200
-    ## 110  19  24 12440
-    ## 111  25  25 13860
-    ## 112  19  24 15580
-    ## 113  28  33 16900
-    ## 114  19  24 16695
-    ## 115  25  25 17075
-    ## 116  19  24 16630
-    ## 117  28  33 17950
-    ## 118  18  24 18150
-    ## 119  37  41  5572
-    ## 120  24  30  7957
-    ## 121  31  38  6229
-    ## 122  31  38  6692
-    ## 123  31  38  7609
-    ## 124  24  30  8921
-    ## 125  19  24 12764
-    ## 126  19  27 22018
-    ## 127  17  25 32528
-    ## 128  17  25 34028
-    ## 129  17  25 37028
-    ## 130  17  28    NA
-    ## 131  23  31  9295
-    ## 132  23  31  9895
-    ## 133  21  28 11850
-    ## 134  21  28 12170
-    ## 135  21  28 15040
-    ## 136  21  28 15510
-    ## 137  19  26 18150
-    ## 138  19  26 18620
-    ## 139  31  36  5118
-    ## 140  26  31  7053
-    ## 141  26  31  7603
-    ## 142  32  37  7126
-    ## 143  28  33  7775
-    ## 144  26  32  9960
-    ## 145  24  25  9233
-    ## 146  24  29 11259
-    ## 147  28  32  7463
-    ## 148  25  31 10198
-    ## 149  23  29  8013
-    ## 150  23  23 11694
-    ## 151  35  39  5348
-    ## 152  31  38  6338
-    ## 153  31  38  6488
-    ## 154  31  37  6918
-    ## 155  27  32  7898
-    ## 156  27  32  8778
-    ## 157  30  37  6938
-    ## 158  30  37  7198
-    ## 159  34  36  7898
-    ## 160  38  47  7788
-    ## 161  38  47  7738
-    ## 162  28  34  8358
-    ## 163  28  34  9258
-    ## 164  29  34  8058
-    ## 165  29  34  8238
-    ## 166  26  29  9298
-    ## 167  26  29  9538
-    ## 168  24  30  8449
-    ## 169  24  30  9639
-    ## 170  24  30  9989
-    ## 171  24  30 11199
-    ## 172  24  30 11549
-    ## 173  24  30 17669
-    ## 174  29  34  8948
-    ## 175  30  33 10698
-    ## 176  27  32  9988
-    ## 177  27  32 10898
-    ## 178  27  32 11248
-    ## 179  20  24 16558
-    ## 180  19  24 15998
-    ## 181  20  24 15690
-    ## 182  19  24 15750
-    ## 183  37  46  7775
-    ## 184  27  34  7975
-    ## 185  37  46  7995
-    ## 186  27  34  8195
-    ## 187  27  34  8495
-    ## 188  37  42  9495
-    ## 189  26  32  9995
-    ## 190  24  29 11595
-    ## 191  24  29  9980
-    ## 192  19  24 13295
-    ## 193  33  38 13845
-    ## 194  25  31 12290
-    ## 195  23  28 12940
-    ## 196  23  28 13415
-    ## 197  24  28 15985
-    ## 198  24  28 16515
-    ## 199  17  22 18420
-    ## 200  17  22 18950
-    ## 201  23  28 16845
-    ## 202  19  25 19045
-    ## 203  18  23 21485
-    ## 204  26  27 22470
-    ## 205  19  25 22625
+    ## Warning: Duplicated column names deduplicated: 'double' => 'double_1' [2],
+    ## 'character' => 'character_1' [4], 'character' => 'character_2' [5],
+    ## 'character' => 'character_3' [6], 'character' => 'character_4' [7],
+    ## 'character' => 'character_5' [8], 'character' => 'character_6' [9],
+    ## 'double' => 'double_2' [10], 'double' => 'double_3' [11], 'double'
+    ## => 'double_4' [12], 'double' => 'double_5' [13], 'character' =>
+    ## 'character_7' [15], 'character' => 'character_8' [16], 'integer'
+    ## => 'integer_1' [17], 'character' => 'character_9' [18], 'double' =>
+    ## 'double_6' [19], 'double' => 'double_7' [20], 'double' => 'double_8' [21],
+    ## 'integer' => 'integer_2' [22], 'integer' => 'integer_3' [23], 'integer'
+    ## => 'integer_4' [24], 'integer' => 'integer_5' [25], 'integer' =>
+    ## 'integer_6' [26]
+
+``` r
+data_alternate
+```
+
+    ## # A tibble: 205 x 26
+    ##    double double_1 character   character_1 character_2 character_3
+    ##     <dbl>    <dbl> <chr>       <chr>       <chr>       <chr>      
+    ##  1   3.00       NA alfa-romero gas         std         two        
+    ##  2   3.00       NA alfa-romero gas         std         two        
+    ##  3   1.00       NA alfa-romero gas         std         two        
+    ##  4   2.00      164 audi        gas         std         four       
+    ##  5   2.00      164 audi        gas         std         four       
+    ##  6   2.00       NA audi        gas         std         two        
+    ##  7   1.00      158 audi        gas         std         four       
+    ##  8   1.00       NA audi        gas         std         four       
+    ##  9   1.00      158 audi        gas         turbo       four       
+    ## 10   0          NA audi        gas         turbo       two        
+    ## # ... with 195 more rows, and 20 more variables: character_4 <chr>,
+    ## #   character_5 <chr>, character_6 <chr>, double_2 <dbl>, double_3 <dbl>,
+    ## #   double_4 <dbl>, double_5 <dbl>, integer <int>, character_7 <chr>,
+    ## #   character_8 <chr>, integer_1 <int>, character_9 <chr>, double_6 <dbl>,
+    ## #   double_7 <dbl>, double_8 <dbl>, integer_2 <int>, integer_3 <int>,
+    ## #   integer_4 <int>, integer_5 <int>, integer_6 <int>
 
 ### Technical Questions about importing data
 
@@ -2312,10 +1727,19 @@ corrplot(plot_qdat, method = "ellipse")
 corrplot(plot_qdat, type = "upper", order = "hclust" )
 ```
 
-![](hw01-soham-ghosh_files/figure-markdown_github/unnamed-chunk-5-2.png) The first correlation plot has ellipses within in of different sizes. The ellipses become significantly thinner when it is in the box of two of the same categories. For example, if it is in the box for length both on its top and to the left. Additionally, the data is normalized, and the positive correlation is in blue, with negative correlations being shown in red. <enter> The second correlation plot has circles within it, which also is of different sizes and colors. Blue indicate a larger circle, and red circles are smaller. Any circle in a box with both categories as the same on the top and left are large blue circles. A bigger circle seems to indicate a higher value of r in absolute value. A large red circle indicates a high negative correlation. \#\#\#Pricipal Components Analysis
+![](hw01-soham-ghosh_files/figure-markdown_github/unnamed-chunk-5-2.png) The first correlation plot has ellipses within in of different sizes. The ellipses become significantly thinner when it is in the box of two of the same categories. For example, if it is in the box for length both on its top and to the left. Additionally, the data is normalized, and the positive correlation is in blue, with negative correlations being shown in red. <enter> The second correlation plot has circles within it, which also is of different sizes and colors. Blue indicate a larger circle, and red circles are smaller. Any circle in a box with both categories as the same on the top and left are large blue circles. A bigger circle seems to indicate a higher value of r in absolute value. A large red circle indicates a high negative correlation. <enter> \#\#\#Pricipal Components Analysis
 
 ``` r
-principal <- prcomp(scale. = TRUE, qdat)
+principal <- prcomp(scale = TRUE, qdat)
+eigenvalues <- principal$sdev^2
+eigenvalues
+```
+
+    ##  [1] 7.53181553 2.27923094 1.21613308 0.90961519 0.60894217 0.41570430
+    ##  [7] 0.32059895 0.27014548 0.12030933 0.11060092 0.08158813 0.06422049
+    ## [13] 0.05139667 0.01969881
+
+``` r
 summary(principal)
 ```
 

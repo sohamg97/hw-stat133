@@ -6,13 +6,15 @@ output: github_document
 ## HW 01
 
 ```{r}
+library(readr)
 titles <- c("symboling", "normalized_losses", "make", "fuel_type", "aspiration", "num_of_doors", "body_style", "drive_wheels","engine_location","wheel_base","length","width","height","curb_weight","enginge_type", "num_of_cylinders","engine_size","fuel_system", "bore", "stroke","compression_ratio","horsepower","peak_rpm","city_mpg","highway_mpg","price")
 types = c("double","double","character","character","character","character","character","character","character", "double","double","double","double","integer","character","character","integer","character","double","double","double","integer","integer","integer","integer","integer")
 data <- read.csv(file = "imports-85.data", col.names = titles, colClasses = types, header = FALSE, na = "?")
 data
 str(data)
-data2 <- read.csv(file = "imports-85.data", header = FALSE, na = "?")
-data2
+type_abbre <- "ddcccccccddddiccicdddiiiii"
+data_alternate <- read_csv(file = "imports-85.data", col_types = type_abbre, na = "?", col_names = types)
+data_alternate
 ```
 
 ### Technical Questions about importing data
@@ -113,9 +115,14 @@ corrplot(plot_qdat, type = "upper", order = "hclust" )
 The first correlation plot has ellipses within in of different sizes. The ellipses become significantly thinner when it is in the box of two of the same categories. For example, if it is in the box for length both on its top and to the left. Additionally, the data is normalized, and the positive correlation is in blue, with negative correlations being shown in red.
 <enter> 
 The second correlation plot has circles within it, which also is of different sizes and colors. Blue indicate a larger circle, and red circles are smaller. Any circle in a box with both categories as the same on the top and left are large blue circles. A bigger circle seems to indicate a higher value of r in absolute value. A large red circle indicates a high negative correlation. 
+<enter> 
+
 ###Pricipal Components Analysis
+
 ```{r}
-principal <- prcomp(scale. = TRUE, qdat)
+principal <- prcomp(scale = TRUE, qdat)
+eigenvalues <- principal$sdev^2
+eigenvalues
 summary(principal)
 scatter_vehicles <- principal$x
 plot(scatter_vehicles[, "PC1"], scatter_vehicles[, "PC2"])
