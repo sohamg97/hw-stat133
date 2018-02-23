@@ -3,12 +3,7 @@ title: "hw01-Soham-Ghosh"
 output: github_document
 ---
 
-
 ## HW 01
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 ```{r}
 titles <- c("symboling", "normalized_losses", "make", "fuel_type", "aspiration", "num_of_doors", "body_style", "drive_wheels","engine_location","wheel_base","length","width","height","curb_weight","enginge_type", "num_of_cylinders","engine_size","fuel_system", "bore", "stroke","compression_ratio","horsepower","peak_rpm","city_mpg","highway_mpg","price")
@@ -115,7 +110,9 @@ plot_qdat <- cor(qdat)
 corrplot(plot_qdat, method = "ellipse")
 corrplot(plot_qdat, type = "upper", order = "hclust" )
 ```
-
+The first correlation plot has ellipses within in of different sizes. The ellipses become significantly thinner when it is in the box of two of the same categories. For example, if it is in the box for length both on its top and to the left. Additionally, the data is normalized, and the positive correlation is in blue, with negative correlations being shown in red.
+<enter> 
+The second correlation plot has circles within it, which also is of different sizes and colors. Blue indicate a larger circle, and red circles are smaller. Any circle in a box with both categories as the same on the top and left are large blue circles. A bigger circle seems to indicate a higher value of r in absolute value. A large red circle indicates a high negative correlation. 
 ###Pricipal Components Analysis
 ```{r}
 principal <- prcomp(scale. = TRUE, qdat)
@@ -127,3 +124,4 @@ principal_load <- principal$loadings
 principal_load
 plot(principal_load[, "Comp.1"], principal_load[, "Comp.2"])
 ```
+The dot plot shows that there is a higher frequency of cars that have a negative smyboling value, indicating that most of the cars are considered safer rather than riskier. 

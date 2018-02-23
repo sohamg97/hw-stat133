@@ -2312,9 +2312,7 @@ corrplot(plot_qdat, method = "ellipse")
 corrplot(plot_qdat, type = "upper", order = "hclust" )
 ```
 
-![](hw01-soham-ghosh_files/figure-markdown_github/unnamed-chunk-5-2.png)
-
-### Pricipal Components Analysis
+![](hw01-soham-ghosh_files/figure-markdown_github/unnamed-chunk-5-2.png) The first correlation plot has ellipses within in of different sizes. The ellipses become significantly thinner when it is in the box of two of the same categories. For example, if it is in the box for length both on its top and to the left. Additionally, the data is normalized, and the positive correlation is in blue, with negative correlations being shown in red. <enter> The second correlation plot has circles within it, which also is of different sizes and colors. Blue indicate a larger circle, and red circles are smaller. Any circle in a box with both categories as the same on the top and left are large blue circles. A bigger circle seems to indicate a higher value of r in absolute value. A large red circle indicates a high negative correlation. \#\#\#Pricipal Components Analysis
 
 ``` r
 principal <- prcomp(scale. = TRUE, qdat)
@@ -2394,4 +2392,4 @@ principal_load
 plot(principal_load[, "Comp.1"], principal_load[, "Comp.2"])
 ```
 
-![](hw01-soham-ghosh_files/figure-markdown_github/unnamed-chunk-6-2.png)
+![](hw01-soham-ghosh_files/figure-markdown_github/unnamed-chunk-6-2.png) The dot plot shows that there is a higher frequency of cars that have a negative smyboling value, indicating that most of the cars are considered safer rather than riskier.
