@@ -24,3 +24,5 @@ The data is about cars, and its rating based on insurance and risk purposes and 
 -The data type for city-mpg is is numeric, with units as miles per gallon. It shows the mpg of the car when driven in the city.
 -The data type for highway-mpg is numeric, with units as miles per gallon. It shows the mpg of the car when driven on the highway.
 -The data type for price is numeric, with units as dollars. It shows the price of the car.
+The comma is the delimiter.
+The missing values are shown by a question mark.
