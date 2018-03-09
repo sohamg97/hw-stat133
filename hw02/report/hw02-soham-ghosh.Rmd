@@ -1,0 +1,61 @@
+---
+title: "hw02-soham-ghosh"
+author: "Soham Ghosh"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.path = '../images/')
+```
+
+### 5.1 Total Shots by Player
+```{r}
+
+data <- read.csv("../data/shots-data.csv", stringsAsFactors = FALSE)
+library(dplyr)
+arrange(count(data, data$name), desc(n))
+
+#combined_ordered <- select(arrange(summarise(group_by(dat, name), points = nrow(shot_type)), desc(points)), name, points)
+#combined_ordered
+```
+
+### 5.2 Effective Shooting Percentage
+#### 2 Point Percentage
+```{r}
+data %>% group_by(name) %>% filter(shot_type == "2PT Field Goal") %>% summarise(total = length(shot_type), made = length(shot_made_flag[shot_made_flag == "made_shot"]), perc_made = made / total) %>% arrange(desc(perc_made))
+```
+#### 3 Point Percentage 
+```{r}
+data %>% group_by(name) %>% filter(shot_type == "3PT Field Goal") %>% summarise(total = length(shot_type), made = length(shot_made_flag[shot_made_flag == "made_shot"]), perc_made = made / total) %>% arrange(desc(perc_made))
+```
+#### Total Points Percentage
+```{r}
+data %>% group_by(name) %>% summarise(total = length(shot_made_flag), made = length(shot_made_flag[shot_made_flag == "made_shot"]), perc_made = made / total) %>% arrange(desc(perc_made))
+```
+
+### 6.1 Shooting Distance - dplyr table
+```{r}
+distance_percentage <- data %>% group_by(shot_distance) %>% summarise(total = length(shot_made_flag), made = length(shot_made_flag[shot_made_flag == "made_shot"]), made_shot_prop = made / total) %>% select(shot_distance, made_shot_prop) %>% arrange(shot_distance)
+distance_percentage
+```
+
+### 6.2 ggplot
+```{r}
+library(ggplot2)
+ggplot(data = distance_percentage, aes(x = shot_distance, y = made_shot_prop)) +geom_point() + theme_minimal()
+```
+I observe a graph that shows a trend in that as the distance from the shot to the hoop increases, the chances that the shot itself makes decreases. There is a steep decrease from 0 to 5 feet. From there, I see a slight increase from 5 to 20 feet. From 20 feet onwards, there is a decrease in the field goal percentage. Other than 5 to 20 feet, the shorter the distance, the more effective the shot. Inside the 5-20 feet range, the opposite seems to be the case. From about 35 feet onwards, the chance of making a shot is basically null. 0-4, 12,16, 18, 21, and 30 feet shots have a 50% chance of making it or higher. 
+
+### 7. Total Number of Shots by Minutes of Occurence
+
+```{r}
+shots_by_minute = summarise(group_by(data, minute, name), total = length(shot_type))
+ggplot(data = shots_by_minute, aes(x = minute, y = total)) + 
+  geom_point(size = 1, color = "cornflowerblue") +
+  geom_path(alpha = 0.5, color = "cornflowerblue") +
+  facet_wrap(~ name) +
+  theme_minimal() +
+  scale_x_continuous() +
+  ylab("Total Shots Taken") 
+```
+The 5 graphs show how many number of shots they have taken in total, specifically for each certain point of time (minutes into the game). There are a total of 48 minutes in each game. 

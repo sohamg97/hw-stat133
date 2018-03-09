@@ -1,0 +1,1 @@
+This hw will be about using ggplot and dplyr. Additionally, it will focus on creating shot charts for different players in the Golden State Warriors. This will include summaries and visualization. Another goal for this assignment is to work with more complex file structures.
