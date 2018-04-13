@@ -17,6 +17,7 @@ source("../code/archive-functions.R")
 raw_data <- read_archive('stringr')
 clean_data <- clean_archive(raw_data)
 plot_archive(clean_data)
+
 ```
 
 ### 1.5) Archives of "splyr", "ggplot2", "XML", and "knitr"
