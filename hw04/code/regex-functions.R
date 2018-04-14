@@ -51,6 +51,7 @@ reverse_chars <- function(x) {
 }
 reverse_chars("gattaca")
 
+
 #' @title reverse_words
 #' @description reverses the words of a sentence
 #' @param string

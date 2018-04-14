@@ -1,1 +1,1 @@
-This homework is designed to help us learn how to work with strings. This includes the manipulation of strings and regular expressions. This is also meant to teach how to produce a clean data frame, through means of cleaning, transformations and formatting. 
+This homework is designed to help us learn how to work with strings. This includes the manipulation of strings and regular expressions. This is also meant to teach how to produce a clean data frame, through means of cleaning, transformations as well as formatting. 
