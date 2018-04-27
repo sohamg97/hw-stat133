@@ -1,0 +1,12 @@
+Package: dieroller
+Type: Package
+Title: Dieroller
+Version: 0.1.0
+Author: Soham Ghosh
+Maintainer: Soham Ghosh <sohamg@berkeley.edu>
+Description: Simulation of rolling die given sides and number of rolls.
+   
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1

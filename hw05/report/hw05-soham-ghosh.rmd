@@ -1,0 +1,62 @@
+---
+title: "hw05-soham-ghosh"
+output: html_document
+date: 4/27/18
+author: Soham Ghosh
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem I
+
+```{r}
+library(dieroller)
+regular_die = die()
+total = 0
+total_two = 0
+for(i in 1:1000){
+  simulation_4 = roll(regular_die, 4)
+  total_six = sum(simulation_4$rolls == regular_die$sides[6])
+  if(total_six > 0){
+    total = total + 1
+    total_two = total_two + total_six
+  }
+}
+
+print(sprintf("The total number of games where they were atleast one 6  is %s", total))
+
+print(sprintf("The relative frequency is %s", total/1000))
+
+print(sprintf("The number of rolls out of 4000 where it was a 6 %s", total_two/4000))
+```
+
+## Problem II
+
+``` {r}
+regular_die = die()
+
+total_66 = 0
+for( i in 1:1000){
+  bool = FALSE
+  for(j in 1:24){
+    sim_i = roll(regular_die, 2)
+    total_6_2 = sum(sim_i$rolls == regular_die$sides[6])
+    if(total_6_2 == 2){
+      bool = TRUE
+    }
+  }
+  if(bool ==  TRUE){
+    total_66 = total_66 + 1
+  }
+}
+
+print(sprintf("The total is %s", total_66))
+
+print(sprintf("The relative frequency is %s", total_66/1000))
+
+1-(35/36)^24
+```
+
+
