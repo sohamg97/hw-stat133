@@ -25,11 +25,11 @@ for(i in 1:1000){
   }
 }
 
-print(sprintf("The total number of games where they were atleast one 6  is %s", total))
+print(sprintf("Total games with at least one 6 is %s", total))
 
 print(sprintf("The relative frequency is %s", total/1000))
 
-print(sprintf("The number of rolls out of 4000 where it was a 6 %s", total_two/4000))
+print(sprintf("Number of rolls of 4000 with a 6 %s", total_two/4000))
 ```
 
 ## Problem II
